@@ -10,23 +10,22 @@ include_directories(
   ../src/Headers
 )
 
-
 ###########################################################################
 
 project(CoreLib)
 
 if (WIN32)
-  set(source-module-handler 
-    ../src/Core/ModuleHandlerWin32.cpp
+  set(source-module
+    ../src/Generic/Module/Win32.cpp
   )
 elseif (UNIX)
-  set(source-module-handler 
-    ../src/Core/ModuleHandlerUnix.cpp
+  set(source-module
+    ../src/Generic/Module/Unix.cpp
   )
 endif (WIN32)
 
-add_library(module-handler
-  ${source-module-handler}
+add_library(module
+  ${source-module}
 )
 
 ###########################################################################
@@ -34,16 +33,8 @@ add_library(module-handler
 project(CoreApp)
 
 set(libs-grabber
-  module-handler
+  module
 )
-
-find_package(CURL)
-if (CURL_FOUND)
-  set(libs-grabber ${libs-grabber}
-    ${CURL_LIBRARIES}
-  )
-endif(CURL_FOUND)
-
 
 add_executable(danbooru-cpp-grabber 
   ../src/Apps/Main.cpp
