@@ -11,33 +11,35 @@ include_directories(
 )
 
 ###########################################################################
-
-project(CoreLib)
+project(DanbooruGrabberCore)
 
 if (WIN32)
-  set(source-module
-    ../src/Generic/Module/Win32.cpp
+  set(sources-module
+    ../src/Core/Modules/ModuleWin.cpp
   )
 elseif (UNIX)
-  set(source-module
-    ../src/Generic/Module/Unix.cpp
+  set(sources-module
+    ../src/Core/Modules/ModuleUnix.cpp
+  )
+  set(libs-core
+    dl
   )
 endif (WIN32)
 
-add_library(module
-  ${source-module}
+add_library(module-module
+  ${sources-module}
 )
 
 ###########################################################################
-
-project(CoreApp)
+project(DanbooruGrabberApp)
 
 set(libs-grabber
-  module
+  module-module
+  ${libs-core}
 )
 
-add_executable(danbooru-cpp-grabber 
-  ../src/Apps/Main.cpp
+add_executable(danbooru-cpp-grabber
+  ../src/Core/Main.cpp
 )
 
 target_link_libraries(danbooru-cpp-grabber ${libs-grabber})
