@@ -11,6 +11,15 @@ include_directories(
 )
 
 ###########################################################################
+project(DownloaderModules)
+
+add_library(downloader-curl MODULE ../src/Modules/Downloader/Curl/Curl.cpp)
+target_link_libraries(downloader-curl curl)
+set_target_properties(downloader-curl
+  PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../share/downloaders/")
+
+
+###########################################################################
 project(DanbooruGrabberCore)
 
 if (WIN32)
@@ -25,6 +34,11 @@ elseif (UNIX)
     dl
   )
 endif (WIN32)
+
+set(sources-module ${sources-module}
+  ../src/Core/Modules/Generic.cpp
+  ../src/Core/Modules/Downloader.cpp
+)
 
 add_library(module-module
   ${sources-module}

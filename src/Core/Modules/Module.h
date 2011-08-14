@@ -19,14 +19,12 @@ class Module {
 	protected:
 		bool wasLoaded;
 		std::string path;
-	protected:
-		void * sym(std::string const& symname);
-		void unload();
 	public:
 		Module();
 		~Module();
 	public:
 		void load(std::string const& filepath);
+		void * sym(std::string const& symname);
 };
 
 #endif

@@ -1,6 +1,5 @@
-#include "Modules/Module.h"
+#include "Modules/Downloader.h"
 
 int main(int argc, char** argv) {
-	Module abc;
 	return 0;
 }

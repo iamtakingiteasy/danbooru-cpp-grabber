@@ -4,7 +4,7 @@ native:
 	cd build-native; cmake .; make;
 
 cross-win32:
-	cd build-cross-win32; cmake .; make;
+	cd build-cross-win32; cmake .; cmake .; make;
 
 make-all: native cross-win32
 
