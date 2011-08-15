@@ -5,18 +5,31 @@
 #include <ostream>
 
 class DownloaderInterface {
-	private:
+	protected:
 		std::string url;
-		std::ostream &os;
+		std::ostream *os;
+		bool wasPrepared;
+	private:
+		virtual void actualPrepare() = 0;
+		virtual void actualFetch() = 0;
 	public:
-		DownloaderInterface(std::string const& url, std::ostream & os) :
-			url(url),
-			os(os)
-		{}
+		DownloaderInterface() {
+			os = NULL;
+			wasPrepared = false;
+		}
 		virtual ~DownloaderInterface() {}
 	public:
-		virtual void perform() = 0;
-		
+		void prepare(std::string const& urlArg, std::ostream *osArg) {
+			url = urlArg;
+			os = osArg;
+			wasPrepared = true;
+			actualPrepare();
+		};
+		void fetch() {
+			if (wasPrepared) {
+				actualFetch();
+			}
+		}
 };
 
 typedef DownloaderInterface * downloader_create_t();
