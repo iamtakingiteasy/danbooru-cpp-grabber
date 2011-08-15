@@ -13,10 +13,17 @@ include_directories(
 ###########################################################################
 project(DownloaderModules)
 
-add_library(downloader-curl MODULE ../src/Modules/Downloader/Curl/Curl.cpp)
+add_library(downloader-curl MODULE ../src/Modules/Downloaders/Curl/Curl.cpp)
 target_link_libraries(downloader-curl curl)
 set_target_properties(downloader-curl
   PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../modules/downloaders/")
+
+###########################################################################
+project(BoarddModules)
+
+add_library(board-danbooru-xml MODULE ../src/Modules/Boards/Danbooru/DanbooruXML.cpp)
+set_target_properties(board-danbooru-xml
+  PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../modules/boards/")
 
 
 ###########################################################################

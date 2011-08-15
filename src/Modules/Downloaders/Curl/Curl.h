@@ -10,6 +10,7 @@ class CurlDownloader : public DownloaderInterface {
 		CURLcode res;
 	private:
 		size_t static writeData(void *buffer, size_t size, size_t nmemb, void *userp);
+	public:
 		CurlDownloader() : DownloaderInterface() {}
 		~CurlDownloader();
 	public:
