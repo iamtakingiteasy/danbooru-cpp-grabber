@@ -1,1 +1,1 @@
-../CMakeLists.txt
+../scripts/mainscript

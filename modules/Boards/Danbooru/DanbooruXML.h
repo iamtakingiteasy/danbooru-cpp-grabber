@@ -5,8 +5,8 @@
 
 class DanbooruXML : public BoardInterface {
 	public:
-		DanbooruXML();
-		~DanbooruXML();
+		DanbooruXML() {}
+		~DanbooruXML() {}
 	public:
 		std::string genURLQueryTags(std::string const& tagPattern);
 		std::string genURLQueryPosts(std::vector<std::string> const& tags);

@@ -1,7 +1,10 @@
-A brief roadmap of grabber structure
 
+
+############################## Brief grabber architecture structure
 
  MAIN -> BOARD MODULE -> HANDLER MODULE
           |       ^
           V       |
        DOWNLOADER MODULE
+
+
