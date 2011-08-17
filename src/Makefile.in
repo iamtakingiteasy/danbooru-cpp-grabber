@@ -35,6 +35,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = danbooru-cpp-grabber$(EXEEXT)
+@MINGW_TRUE@am__append_1 = Modular/ModuleWin.cpp
+@MINGW_FALSE@am__append_2 = Modular/ModuleUnix.cpp
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -47,7 +49,13 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_danbooru_cpp_grabber_OBJECTS = Main.$(OBJEXT)
+am__danbooru_cpp_grabber_SOURCES_DIST = Main.cpp Modular/Generic.cpp \
+	Modular/Downloader.cpp Modular/ModuleWin.cpp \
+	Modular/ModuleUnix.cpp
+@MINGW_TRUE@am__objects_1 = ModuleWin.$(OBJEXT)
+@MINGW_FALSE@am__objects_2 = ModuleUnix.$(OBJEXT)
+am_danbooru_cpp_grabber_OBJECTS = Main.$(OBJEXT) Generic.$(OBJEXT) \
+	Downloader.$(OBJEXT) $(am__objects_1) $(am__objects_2)
 danbooru_cpp_grabber_OBJECTS = $(am_danbooru_cpp_grabber_OBJECTS)
 danbooru_cpp_grabber_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -64,7 +72,7 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(danbooru_cpp_grabber_SOURCES)
-DIST_SOURCES = $(danbooru_cpp_grabber_SOURCES)
+DIST_SOURCES = $(am__danbooru_cpp_grabber_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -187,7 +195,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-danbooru_cpp_grabber_SOURCES = Main.cpp
+danbooru_cpp_grabber_SOURCES = Main.cpp Modular/Generic.cpp \
+	Modular/Downloader.cpp $(am__append_1) $(am__append_2)
 all: all-am
 
 .SUFFIXES:
@@ -275,7 +284,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Downloader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Generic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ModuleUnix.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ModuleWin.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -297,6 +310,62 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+Generic.o: Modular/Generic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Generic.o -MD -MP -MF $(DEPDIR)/Generic.Tpo -c -o Generic.o `test -f 'Modular/Generic.cpp' || echo '$(srcdir)/'`Modular/Generic.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Generic.Tpo $(DEPDIR)/Generic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/Generic.cpp' object='Generic.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Generic.o `test -f 'Modular/Generic.cpp' || echo '$(srcdir)/'`Modular/Generic.cpp
+
+Generic.obj: Modular/Generic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Generic.obj -MD -MP -MF $(DEPDIR)/Generic.Tpo -c -o Generic.obj `if test -f 'Modular/Generic.cpp'; then $(CYGPATH_W) 'Modular/Generic.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/Generic.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Generic.Tpo $(DEPDIR)/Generic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/Generic.cpp' object='Generic.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Generic.obj `if test -f 'Modular/Generic.cpp'; then $(CYGPATH_W) 'Modular/Generic.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/Generic.cpp'; fi`
+
+Downloader.o: Modular/Downloader.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Downloader.o -MD -MP -MF $(DEPDIR)/Downloader.Tpo -c -o Downloader.o `test -f 'Modular/Downloader.cpp' || echo '$(srcdir)/'`Modular/Downloader.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Downloader.Tpo $(DEPDIR)/Downloader.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/Downloader.cpp' object='Downloader.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Downloader.o `test -f 'Modular/Downloader.cpp' || echo '$(srcdir)/'`Modular/Downloader.cpp
+
+Downloader.obj: Modular/Downloader.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Downloader.obj -MD -MP -MF $(DEPDIR)/Downloader.Tpo -c -o Downloader.obj `if test -f 'Modular/Downloader.cpp'; then $(CYGPATH_W) 'Modular/Downloader.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/Downloader.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Downloader.Tpo $(DEPDIR)/Downloader.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/Downloader.cpp' object='Downloader.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Downloader.obj `if test -f 'Modular/Downloader.cpp'; then $(CYGPATH_W) 'Modular/Downloader.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/Downloader.cpp'; fi`
+
+ModuleWin.o: Modular/ModuleWin.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ModuleWin.o -MD -MP -MF $(DEPDIR)/ModuleWin.Tpo -c -o ModuleWin.o `test -f 'Modular/ModuleWin.cpp' || echo '$(srcdir)/'`Modular/ModuleWin.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ModuleWin.Tpo $(DEPDIR)/ModuleWin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/ModuleWin.cpp' object='ModuleWin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ModuleWin.o `test -f 'Modular/ModuleWin.cpp' || echo '$(srcdir)/'`Modular/ModuleWin.cpp
+
+ModuleWin.obj: Modular/ModuleWin.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ModuleWin.obj -MD -MP -MF $(DEPDIR)/ModuleWin.Tpo -c -o ModuleWin.obj `if test -f 'Modular/ModuleWin.cpp'; then $(CYGPATH_W) 'Modular/ModuleWin.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/ModuleWin.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ModuleWin.Tpo $(DEPDIR)/ModuleWin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/ModuleWin.cpp' object='ModuleWin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ModuleWin.obj `if test -f 'Modular/ModuleWin.cpp'; then $(CYGPATH_W) 'Modular/ModuleWin.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/ModuleWin.cpp'; fi`
+
+ModuleUnix.o: Modular/ModuleUnix.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ModuleUnix.o -MD -MP -MF $(DEPDIR)/ModuleUnix.Tpo -c -o ModuleUnix.o `test -f 'Modular/ModuleUnix.cpp' || echo '$(srcdir)/'`Modular/ModuleUnix.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ModuleUnix.Tpo $(DEPDIR)/ModuleUnix.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/ModuleUnix.cpp' object='ModuleUnix.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ModuleUnix.o `test -f 'Modular/ModuleUnix.cpp' || echo '$(srcdir)/'`Modular/ModuleUnix.cpp
+
+ModuleUnix.obj: Modular/ModuleUnix.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ModuleUnix.obj -MD -MP -MF $(DEPDIR)/ModuleUnix.Tpo -c -o ModuleUnix.obj `if test -f 'Modular/ModuleUnix.cpp'; then $(CYGPATH_W) 'Modular/ModuleUnix.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/ModuleUnix.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ModuleUnix.Tpo $(DEPDIR)/ModuleUnix.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Modular/ModuleUnix.cpp' object='ModuleUnix.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ModuleUnix.obj `if test -f 'Modular/ModuleUnix.cpp'; then $(CYGPATH_W) 'Modular/ModuleUnix.cpp'; else $(CYGPATH_W) '$(srcdir)/Modular/ModuleUnix.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -504,11 +573,12 @@ uninstall-am: uninstall-binPROGRAMS
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
-#danbooru_cpp_grabber_CXXFLAGS = $(DCPPG_CXXFLAGS)
-#danbooru_cpp_grabber_LDFLAGS = $(DCPPG_LDFLAGS)
-#AM_CPPFLAGS = $(DCPPG_INCLUDES)
 
-#LDDL_DLOPEN_SYSTEM
+#if MINGW
+#	danbooru_cpp_grabber_SOURCES += Modular/ModuleWin.cpp
+#else
+#	danbooru_cpp_grabber_SOURCES += Modular/ModuleUnix.cpp
+#endif
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

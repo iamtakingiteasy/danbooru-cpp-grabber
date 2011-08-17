@@ -16,8 +16,12 @@ CPPFLAGS="${CPPFLAGS} -I\$(top_srcdir)/include"
 
 case $host in
   *mingw*) 
+    AM_CONDITIONAL(MINGW, true)
     CXXFLAGS="-static-libgcc -static-libstdc++"
     LDFLAGS="-static"
+  ;;
+  *)
+    AM_CONDITIONAL(MINGW, false)
   ;;
 esac
 
