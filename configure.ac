@@ -43,6 +43,8 @@ AC_TYPE_SIZE_T
 
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile])
+                 src/Makefile
+                 include/Makefile
+                 include/danbooru-cpp-grabber/Makefile])
 
 AC_OUTPUT
