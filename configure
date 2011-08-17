@@ -661,8 +661,6 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
-DCPPG_CXXFLAGS
-DCPPG_INCLUDES
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
@@ -2887,11 +2885,14 @@ fi
 
 
 
-DCPPG_INCLUDES='-I$(top_srcdir)/include'
+CPPFLAGS="${CPPFLAGS} -I\$(top_srcdir)/include"
 
 
 case $host in
-  *"mingw"*) DCPPG_CXXFLAGS='-static-libgcc -static-libstdc++';;
+  *mingw*)
+    CXXFLAGS="-static-libgcc -static-libstdc++"
+    LDFLAGS="-static"
+  ;;
 esac
 
 

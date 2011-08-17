@@ -47,13 +47,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_danbooru_cpp_grabber_OBJECTS = danbooru_cpp_grabber-Main.$(OBJEXT)
+am_danbooru_cpp_grabber_OBJECTS = Main.$(OBJEXT)
 danbooru_cpp_grabber_OBJECTS = $(am_danbooru_cpp_grabber_OBJECTS)
 danbooru_cpp_grabber_LDADD = $(LDADD)
-danbooru_cpp_grabber_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(danbooru_cpp_grabber_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -89,8 +85,6 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DCPPG_CXXFLAGS = @DCPPG_CXXFLAGS@
-DCPPG_INCLUDES = @DCPPG_INCLUDES@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
@@ -194,8 +188,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 danbooru_cpp_grabber_SOURCES = Main.cpp
-danbooru_cpp_grabber_CXXFLAGS = $(DCPPG_CXXFLAGS)
-AM_CPPFLAGS = $(DCPPG_INCLUDES)
 all: all-am
 
 .SUFFIXES:
@@ -275,7 +267,7 @@ clean-binPROGRAMS:
 	rm -f $$list
 danbooru-cpp-grabber$(EXEEXT): $(danbooru_cpp_grabber_OBJECTS) $(danbooru_cpp_grabber_DEPENDENCIES) 
 	@rm -f danbooru-cpp-grabber$(EXEEXT)
-	$(danbooru_cpp_grabber_LINK) $(danbooru_cpp_grabber_OBJECTS) $(danbooru_cpp_grabber_LDADD) $(LIBS)
+	$(CXXLINK) $(danbooru_cpp_grabber_OBJECTS) $(danbooru_cpp_grabber_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -283,7 +275,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/danbooru_cpp_grabber-Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Main.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -305,20 +297,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
-
-danbooru_cpp_grabber-Main.o: Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(danbooru_cpp_grabber_CXXFLAGS) $(CXXFLAGS) -MT danbooru_cpp_grabber-Main.o -MD -MP -MF $(DEPDIR)/danbooru_cpp_grabber-Main.Tpo -c -o danbooru_cpp_grabber-Main.o `test -f 'Main.cpp' || echo '$(srcdir)/'`Main.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/danbooru_cpp_grabber-Main.Tpo $(DEPDIR)/danbooru_cpp_grabber-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Main.cpp' object='danbooru_cpp_grabber-Main.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(danbooru_cpp_grabber_CXXFLAGS) $(CXXFLAGS) -c -o danbooru_cpp_grabber-Main.o `test -f 'Main.cpp' || echo '$(srcdir)/'`Main.cpp
-
-danbooru_cpp_grabber-Main.obj: Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(danbooru_cpp_grabber_CXXFLAGS) $(CXXFLAGS) -MT danbooru_cpp_grabber-Main.obj -MD -MP -MF $(DEPDIR)/danbooru_cpp_grabber-Main.Tpo -c -o danbooru_cpp_grabber-Main.obj `if test -f 'Main.cpp'; then $(CYGPATH_W) 'Main.cpp'; else $(CYGPATH_W) '$(srcdir)/Main.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/danbooru_cpp_grabber-Main.Tpo $(DEPDIR)/danbooru_cpp_grabber-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Main.cpp' object='danbooru_cpp_grabber-Main.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(danbooru_cpp_grabber_CXXFLAGS) $(CXXFLAGS) -c -o danbooru_cpp_grabber-Main.obj `if test -f 'Main.cpp'; then $(CYGPATH_W) 'Main.cpp'; else $(CYGPATH_W) '$(srcdir)/Main.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -526,6 +504,9 @@ uninstall-am: uninstall-binPROGRAMS
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
+#danbooru_cpp_grabber_CXXFLAGS = $(DCPPG_CXXFLAGS)
+#danbooru_cpp_grabber_LDFLAGS = $(DCPPG_LDFLAGS)
+#AM_CPPFLAGS = $(DCPPG_INCLUDES)
 
 #LDDL_DLOPEN_SYSTEM
 

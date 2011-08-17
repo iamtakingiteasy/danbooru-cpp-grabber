@@ -11,13 +11,16 @@ AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 
-DCPPG_INCLUDES='-I$(top_srcdir)/include'
-AC_SUBST([DCPPG_INCLUDES])
+CPPFLAGS="${CPPFLAGS} -I\$(top_srcdir)/include"
+
 
 case $host in
-  *"mingw"*) DCPPG_CXXFLAGS='-static-libgcc -static-libstdc++';;
+  *mingw*) 
+    CXXFLAGS="-static-libgcc -static-libstdc++"
+    LDFLAGS="-static"
+  ;;
 esac
-AC_SUBST([DCPPG_CXXFLAGS])
+
 
 
 
