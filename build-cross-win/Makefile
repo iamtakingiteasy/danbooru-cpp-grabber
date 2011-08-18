@@ -1,10 +1,16 @@
 all:
 
 core:
-	cd core; cmake .; cmake .; make # twice
+	cd core; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
+	make # twice
 
 modules:
-	cd modules; cmake .; cmake .; make # twice
+	cd modules; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
+	make # twice
 
 clean:
 	cd core; make clean; true
