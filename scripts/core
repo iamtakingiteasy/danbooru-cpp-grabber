@@ -1,0 +1,42 @@
+###########################################################################
+
+cmake_minimum_required(VERSION 2.8)
+
+set(CMAKE_TOOLCHAIN_FILE platform.cmake)
+
+add_definitions(-pedantic -Wall -g)
+
+###########################################################################
+
+include_directories(
+    include
+)
+
+###########################################################################
+
+set(core-sources
+    src/Main.cpp
+)
+
+if (WIN32)
+    set(core-sources ${core-sources}
+        src/Modular/ModuleWin.cpp
+    )
+elseif (UNIX)
+    set(core-sources ${core-sources}
+        src/Modular/ModuleUnix.cpp
+    )
+    set(core-libs
+        dl
+    )
+endif (WIN32)
+
+set(core-sources ${core-sources}
+    src/Modular/Generic.cpp
+    src/Modular/Downloader.cpp
+)
+
+add_executable(danbooru-cpp-grabber ${core-sources})
+target_link_libraries(danbooru-cpp-grabber ${core-libs})
+set_target_properties(danbooru-cpp-grabber 
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "output/")
