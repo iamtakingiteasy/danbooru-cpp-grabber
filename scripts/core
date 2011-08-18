@@ -8,6 +8,10 @@ add_definitions(-pedantic -Wall -g)
 
 ###########################################################################
 
+include(Config/configuration.cmake)
+
+###########################################################################
+
 include_directories(
     include
 )
