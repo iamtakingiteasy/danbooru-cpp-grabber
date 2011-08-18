@@ -52,6 +52,10 @@ AC_TYPE_SIZE_T
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  include/Makefile
-                 include/danbooru-cpp-grabber/Makefile])
+                 include/danbooru-cpp-grabber/Makefile
+                 modules/Makefile
+                 modules/Downloaders/Makefile
+                 modules/Downloaders/Curl/Makefile
+])
 
 AC_OUTPUT

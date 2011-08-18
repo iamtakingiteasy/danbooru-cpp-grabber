@@ -15139,7 +15139,7 @@ fi
 # Checks for library functions.
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile include/Makefile include/danbooru-cpp-grabber/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile include/Makefile include/danbooru-cpp-grabber/Makefile modules/Makefile modules/Downloaders/Makefile modules/Downloaders/Curl/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -16271,6 +16271,9 @@ do
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
     "include/danbooru-cpp-grabber/Makefile") CONFIG_FILES="$CONFIG_FILES include/danbooru-cpp-grabber/Makefile" ;;
+    "modules/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Makefile" ;;
+    "modules/Downloaders/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Downloaders/Makefile" ;;
+    "modules/Downloaders/Curl/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Downloaders/Curl/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
