@@ -1,4 +1,9 @@
-make
-make install
-
 CMake 2.8+ required.
+
+### building native version
+$ mkdir build
+$ cd build
+$ cmake ../
+$ make
+# make install
+
