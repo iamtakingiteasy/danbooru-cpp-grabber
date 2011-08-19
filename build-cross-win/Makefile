@@ -3,19 +3,27 @@ all:
 core:
 	cd core; \
 	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
-	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
-	make # twice
+	make
 
 modules:
 	cd modules; \
 	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
-	cmake -DCMAKE_TOOLCHAIN_FILE=platform.cmake .; \
-	make # twice
+	make
 
 clean:
 	cd core; make clean; true
 	cd modules; make clean; true
-	cd core; rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake Makefile config.h
-	cd modules; rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake Makefile config.h
+	cd core; rm -fr \
+        CMakeCache.txt \
+        CMakeFiles \
+        cmake_install.cmake \
+        Makefile \
+        tests/include/config.h
+	cd modules; rm -fr \
+        CMakeCache.txt \
+        CMakeFiles \
+        cmake_install.cmake \
+        Makefile \
+        tests/include/config.h
 
 .PHONY: all core modules clean

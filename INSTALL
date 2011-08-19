@@ -1,0 +1,4 @@
+make
+make install
+
+CMake 2.8+ required.

@@ -1,1 +1,1 @@
-../../scripts/modules
+../../build/scripts/modules.cmake

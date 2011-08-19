@@ -1,1 +1,1 @@
-../../scripts/core
+../../build/scripts/core.cmake

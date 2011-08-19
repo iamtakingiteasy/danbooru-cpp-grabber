@@ -1,1 +1,1 @@
-../../scripts/cross-win.platform
+../../build/toolchains/mingw.cmake

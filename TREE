@@ -1,0 +1,28 @@
+Project directory structujre:
+.
+├── build              -- CMake files collection
+│   ├── scripts        -- CMake scenarios collection
+│   ├── tests          -- CMake tests     collection
+│   └── toolchains     -- CMake toolchain collection 
+├── build-cross-win    -- mingw32 crosscompiling working directory
+├── build-native       -- current system native  working directory
+└── src                -- source files directory
+
+build-* directory structure:
+.
+├── core 
+│   ├── CMakeLists.txt -> ../../build/scripts/core.cmake
+│   ├── include -> ../../src/Include/
+│   ├── output -> ../output/
+│   ├── platform.cmake -> ../../build/toolchains/mingw.cmake
+│   ├── src -> ../../src/Core/
+│   └── tests -> ../../build/tests/
+├── Makefile
+├── modules
+│   ├── CMakeLists.txt -> ../../build/scripts/modules.cmake
+│   ├── include -> ../../src/Include/
+│   ├── output -> ../output/
+│   ├── platform.cmake -> ../../build/toolchains/mingw.cmake
+│   ├── src -> ../../src/Modules/
+│   └── tests -> ../../build/tests/
+└── output
