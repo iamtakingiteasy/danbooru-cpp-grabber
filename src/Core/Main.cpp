@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 //	inter->prepare("baka",&std::cout);
 	std::map<std::string,std::string> params;
 	params["abc"]="efg";
+	params["rrr"]="baka shi";
 //	params.push_back("fff");
 	std::cout << URLEncoder("baka",params).str() << std::endl;
 	return 0;

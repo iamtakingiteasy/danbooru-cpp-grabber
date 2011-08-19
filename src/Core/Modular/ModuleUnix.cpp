@@ -1,7 +1,5 @@
 #include "Module.h"
 
-#include <dlfcn.h>
-
 Module::Module() {
 	handle = NULL;
 	wasLoaded = false;

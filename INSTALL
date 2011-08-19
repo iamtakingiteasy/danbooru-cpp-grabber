@@ -1,9 +1,15 @@
 CMake 2.8+ required.
 
-### building native version
+--- building native version
 $ mkdir build
 $ cd build
 $ cmake ../
 $ make
 # make install
 
+--- cross-compiling windows version with mingw
+$ mkdir build-cross-win
+$ cd build-cross-win
+$ cmake ../ -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw.cmake
+$ make
+# make install

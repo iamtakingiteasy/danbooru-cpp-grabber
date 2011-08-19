@@ -3,6 +3,15 @@
 
 #include <stdexcept>
 #include <string>
+#include "config.h"
+
+#ifdef HAVE_DLOPEN
+#    include <dlfcn.h>
+#endif
+
+#ifdef HAVE_LOADLIBRARY
+#    include <windows.h>
+#endif
 
 class ModuleException : public std::logic_error {
 	public:
