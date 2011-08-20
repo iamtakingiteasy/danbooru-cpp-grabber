@@ -3,5 +3,6 @@
 
 #cmakedefine HAVE_DLOPEN
 #cmakedefine HAVE_LOADLIBRARY
+#cmakedefine HAVE_CURL
 
 #endif
