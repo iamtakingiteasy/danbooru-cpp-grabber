@@ -1,16 +1,16 @@
-#ifndef DANBOORU_CPP_GRABBER_MODULE
-#define DANBOORU_CPP_GRABBER_MODULE
+#ifndef DANBOORU_CPP_GRABBER_MODULAR_MODULE
+#define DANBOORU_CPP_GRABBER_MODULAR_MODULE
 
 #include <stdexcept>
 #include <string>
 #include "config.h"
 
-#ifdef HAVE_DLOPEN
-#    include <dlfcn.h>
+#ifdef HAVE_UNIX_MODULAR
+#  include <dlfcn.h>
 #endif
 
-#ifdef HAVE_LOADLIBRARY
-#    include <windows.h>
+#ifdef HAVE_WIN_MODULAR
+#  include <windows.h>
 #endif
 
 class ModuleException : public std::logic_error {

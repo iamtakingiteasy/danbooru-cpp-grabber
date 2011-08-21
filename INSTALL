@@ -1,4 +1,5 @@
 CMake 2.8+ required.
+libcurl must be compiled with CPPFLAGS=-DCURL_STATICLIB ./configure
 
 --- building native version
 $ mkdir build

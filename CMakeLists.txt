@@ -9,9 +9,9 @@ set(CMAKE_MODULE_LINKER_FLAGS "-s")
 
 if(WIN32)
     set(CMAKE_CXX_FLAGS 
-        "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++ -static")
+        "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
     set(CMAKE_MODULE_LINKER_FLAGS 
-        "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
+        "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
     set(CMAKE_CXX_STANDARD_LIBRARIES "")
 endif(WIN32)
 

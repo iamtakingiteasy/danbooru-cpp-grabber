@@ -1,8 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#cmakedefine HAVE_DLOPEN
-#cmakedefine HAVE_LOADLIBRARY
+#cmakedefine HAVE_UNIX_MODULAR
+#cmakedefine HAVE_WIN_MODULAR
 #cmakedefine HAVE_CURL
 
 #endif

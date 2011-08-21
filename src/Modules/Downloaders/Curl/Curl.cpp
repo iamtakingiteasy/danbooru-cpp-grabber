@@ -1,5 +1,6 @@
 #include "Curl.h"
 
+extern "C" std::string const moduleType = "downloader";
 extern "C" std::string const moduleName = "CurlDownloader";
 extern "C" std::string const moduleDescription = "Curl-backended downloader";
 extern "C" std::string const moduleVersion = "1.0";

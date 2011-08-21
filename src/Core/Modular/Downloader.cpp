@@ -3,8 +3,8 @@
 void ModuleDownloader::load(std::string const& filepath) {
 	loadBasic(filepath);
 	try {
-//		createPtr = (downloader_create_t *)(intptr_t)moduleHandle.sym("create");
-//		destroyPtr = (downloader_destroy_t *)(intptr_t)moduleHandle.sym("destroy");
+		createPtr = (downloader_create_t *)(intptr_t)moduleHandle.sym("create");
+		destroyPtr = (downloader_destroy_t *)(intptr_t)moduleHandle.sym("destroy");
 	} catch (ModuleException const& e) {
 		std::cerr << e.what() << std::endl;
 	}
