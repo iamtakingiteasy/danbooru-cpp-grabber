@@ -1,5 +1,6 @@
 set(core-sources
     ${CORE_DIR}/Main.cpp
+    ${CORE_DIR}/Logger/Logger.cpp
     ${CORE_DIR}/Modular/Module.cpp
     ${CORE_DIR}/Modular/Generic.cpp
     ${CORE_DIR}/Modular/Downloader.cpp

@@ -1,5 +1,7 @@
 #include "Manager.h"
 
+extern Logger log;
+
 void ModuleManager::setPaths(std::vector<std::string> const& paths) {
 	modulePaths = paths;
 }
@@ -30,21 +32,27 @@ void ModuleManager::scandir(std::string const& path) {
 		}
 		try {
 			moduleType = *(std::string *)candidate.sym("moduleType");
-		} catch (std::exception const& e){
-//			std::cout << "Failed to get type of module " << fp << std::endl;
+		} catch (std::exception const& e) {
+			log.debug("Failed to get type of module " + fp + "\n");
 			continue;
 		}
 		if (false) {
 		} else if (moduleType == "downloader") {
-			downloaderModules.push_back(ModuleDownloader()); 
-			downloaderModules.back().load(fp);
-			std::cout << "loaded " << fp << std::endl;
+			try {
+				downloaderModules.push_back(ModuleDownloader());
+				downloaderModules.back().load(fp);
+				log.debug("Loaded module " + fp + "\n");
+			} catch (std::exception const& e) {
+				log.debug("Failed to load module " + fp + ". Unloading.\n");
+				downloaderModules.pop_back();
+			}
 		} else if (moduleType == "board") {
 		} else if (moduleType == "handler") {
 		} else {
-			std::cout << fp << ": unknown type '" << moduleType << "'" << std::endl;
+			log.debug("Unknown type of module " + fp + ".\n");
 			continue;
 		}
+
 	}
 	closedir(dip);
 	
@@ -53,6 +61,11 @@ void ModuleManager::scandir(std::string const& path) {
 void ModuleManager::loadModules() {
 	std::vector<std::string>::iterator it;
 	for (it = modulePaths.begin(); it != modulePaths.end(); it++) {
+		log.debug("Entering into modules directory " + *it + "\n");
 		scandir(*it);
 	}
+}
+
+std::vector<ModuleDownloader> const& ModuleManager::getDownloaders() {
+	return downloaderModules;
 }

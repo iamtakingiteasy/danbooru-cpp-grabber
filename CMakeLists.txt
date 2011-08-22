@@ -9,9 +9,9 @@ set(CMAKE_MODULE_LINKER_FLAGS "-s")
 
 if(WIN32)
     set(CMAKE_CXX_FLAGS 
-        "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
+        "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++ -static")
     set(CMAKE_MODULE_LINKER_FLAGS 
-        "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
+        "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
     set(CMAKE_CXX_STANDARD_LIBRARIES "")
 endif(WIN32)
 
@@ -22,6 +22,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/tests/tests.cmake)
 ###########################################################################
 
 include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Include
     ${CMAKE_BINARY_DIR}/include
 )

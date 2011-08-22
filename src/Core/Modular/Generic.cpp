@@ -9,5 +9,19 @@ void ModuleGeneric::loadBasic(std::string const& filepath) {
 		author = *(std::string *)moduleHandle.sym("moduleAuthor");
 	} catch (ModuleException const& e) {
 		std::cerr << e.what() << std::endl;
+		throw e;
 	}
+}
+
+std::string const& ModuleGeneric::getName() const {
+	return name;
+}
+std::string const& ModuleGeneric::getDescription() const {
+	return description;
+}
+std::string const& ModuleGeneric::getVersion() const {
+	return version;
+}
+std::string const& ModuleGeneric::getAuthor() const {
+	return author;
 }

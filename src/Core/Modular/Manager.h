@@ -13,6 +13,7 @@
 
 #include "Module.h"
 #include "Downloader.h"
+#include "Logger/Logger.h"
 #include <vector>
 #include <string>
 
@@ -28,6 +29,8 @@ class ModuleManager {
 	public:
 		void setPaths(std::vector<std::string> const& paths);
 		void loadModules();
+	public:
+		std::vector<ModuleDownloader> const& getDownloaders();
 };
 
 #endif

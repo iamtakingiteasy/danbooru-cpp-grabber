@@ -18,6 +18,11 @@ class ModuleGeneric {
 		virtual ~ModuleGeneric() {}
 	public:
 		void loadBasic(std::string const& filepath);
+	public:
+		std::string const& getName() const;
+		std::string const& getDescription() const;
+		std::string const& getVersion() const;
+		std::string const& getAuthor() const;
 };
 
 #endif

@@ -7,6 +7,7 @@ void ModuleDownloader::load(std::string const& filepath) {
 		destroyPtr = (downloader_destroy_t *)(intptr_t)moduleHandle.sym("destroy");
 	} catch (ModuleException const& e) {
 		std::cerr << e.what() << std::endl;
+		throw e;
 	}
 }
 
