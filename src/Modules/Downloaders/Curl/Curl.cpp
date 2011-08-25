@@ -6,6 +6,7 @@ extern "C" std::string const moduleDescription = "Curl-backended downloader";
 extern "C" std::string const moduleVersion = "1.0";
 extern "C" std::string const moduleAuthor = "Alexander <itakingiteasy> Tumin";
 
+
 extern "C" CurlDownloader * create() { return new CurlDownloader; }
 extern "C" void destroy(CurlDownloader *ptr) { delete ptr; }
 
@@ -37,3 +38,4 @@ void CurlDownloader::actualFetch() {
 		curl_easy_perform(curl);
 	}
 }
+

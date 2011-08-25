@@ -1,6 +1,8 @@
 #ifndef DANBOORU_CPP_GRABBER_CONFIG
 #define DANBOORU_CPP_GRABBER_CONFIG
 
+#include <danbooru-cpp-grabber/DownloaderInterface.h>
+
 #include <string>
 #include <vector>
 
@@ -10,6 +12,7 @@ enum GrabberAction {
 	GA_TAG_DOWNLOAD,
 	GA_MODULE_LIST_ALL,
 	GA_MODULE_LIST_DOWNLOADERS,
+	GA_MODULE_LIST_BOARDS,
 	GA_MODULE_LIST_HANDLERS,
 	GA_INFO_HELP,
 	GA_INFO_VERSION,
@@ -31,6 +34,7 @@ class Config {
 		std::vector<std::string> modulePaths;
 		GrabberAction action;
 		SearchOrder searchOrder;
+		bool searchOrderReverse;
 		std::string iDownloader;
 		std::string iBoard;
 		std::string iHandler;
@@ -42,6 +46,7 @@ class Config {
 		unsigned int pageOffset;
 		unsigned int searchPageLimit;
 		unsigned int downloadPageLimit;
+		DownloaderInterface * downloader;
 };
 
 #endif

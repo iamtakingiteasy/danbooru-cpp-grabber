@@ -11,10 +11,10 @@ void ModuleDownloader::load(std::string const& filepath) {
 	}
 }
 
-DownloaderInterface * ModuleDownloader::create() {
+DownloaderInterface * ModuleDownloader::create() const {
 	return createPtr();
 }
 
-void ModuleDownloader::destroy(DownloaderInterface * instance) {
+void ModuleDownloader::destroy(DownloaderInterface * instance) const {
 	destroyPtr(instance);
 }

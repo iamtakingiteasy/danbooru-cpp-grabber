@@ -17,8 +17,8 @@ class ModuleDownloader : public ModuleGeneric {
 		}
 	public:
 		void load(std::string const& filepath);
-		DownloaderInterface * create();
-		void destroy(DownloaderInterface * instance);
+		DownloaderInterface * create() const;
+		void destroy(DownloaderInterface * instance) const;
 };
 
 #endif

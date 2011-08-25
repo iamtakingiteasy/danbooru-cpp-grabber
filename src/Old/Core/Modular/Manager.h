@@ -30,7 +30,15 @@ class ModuleManager {
 		void setPaths(std::vector<std::string> const& paths);
 		void loadModules();
 	public:
-		std::vector<ModuleDownloader> const& getDownloaders();
+		bool downloaderWithNameExists(std::string const& name) const;
+		bool boardWithNameExists(std::string const& name) const;
+		bool handlerWithNameExists(std::string const& name) const;
+
+		ModuleDownloader const& lookupDownloader(std::string const& name) const;
+		
+		std::vector<ModuleDownloader> const& getDownloaders() const;
+//		std::vector<ModuleDownloader> const& getBoards() const;
+//		std::vector<ModuleDownloader> const& getHandlers() const;
 };
 
 #endif

@@ -1,0 +1,31 @@
+#include "Main.h"
+
+void help() {
+	log.message(
+		"USAGE: " + core.progName + " [OPTIONS] <tag1 [tag2] [...]>\n"
+		"    -h,   --help                         Print this help message           \n"
+		"    -V,   --version                      Print version                     \n"
+		"    -v,   --verbose                      Verbose (debug) printing          \n"
+		"    -d,   --download                     Actual download the tags          \n"
+		"    -u,   --url                          URL of danbooru site              \n"
+		"    -mr   --module-recursion=DEPTH       Module search recursion depth     \n"
+		"    -mp   --module-path=DIR              Additiona directory with plugins  \n"
+		"    -md,  --downloader=MODULE            Downloader module to use. See -ld \n"
+		"    -mb,  --board=MODULE                 Baord module to use. See -lb      \n"
+		"    -mh,  --handler=MODULE               Handler module to use. See -lh    \n"
+		"    -so,  --search-order=ORDER           Tag search result ordering, one of\n"
+		"                                         'count', 'name', 'date',          \n"
+		"    -sor, --search-order-reverse=ORDER   Tag search result reverse ordering\n"
+		"                                         one of 'count', 'name', 'date',   \n"
+		"    -sl,  --search-limit=LIMIT           Search page limit                 \n"
+		"    -dl,  --download-limit=LIMIT         Download page limit               \n"
+		"    -sp,  --search-page=PAGE             Search page offset                \n"
+		"    -dp,  --download-page=PAGE           Download page offset              \n"
+		"    -la,  --list-all                     List ALL modules                  \n"
+		"    -ld,  --list-downloaders             List downloader modules           \n"
+		"    -lb,  --list-boards                  List board modules                \n"
+		"    -lh,  --list-handlers                List handler modules              \n"
+		"    -C,   --working-directory=DIR        Change working directory before   \n"
+		"                                         downloading                       \n"
+	);
+}

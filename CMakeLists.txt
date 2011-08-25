@@ -22,7 +22,6 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/tests/tests.cmake)
 ###########################################################################
 
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Include
     ${CMAKE_BINARY_DIR}/include
 )
