@@ -2,6 +2,8 @@
 #define DANBOORU_CPP_GRABBER_CORE_LOADER_GENERIC
 
 #include <string>
+#include <vector>
+#include <danbooru-cpp-grabber/Generic/OptParser.h>
 #include "Modular.h"
 
 class GenericLoader {
@@ -23,6 +25,7 @@ class GenericLoader {
 		std::string const& getDescription() const;
 		std::string const& getVersion()     const;
 		std::string const& getAuthor()      const;
+		std::string const& getOptions()     const;
 };
 
 #endif

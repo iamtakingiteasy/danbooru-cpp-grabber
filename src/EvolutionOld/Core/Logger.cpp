@@ -1,5 +1,9 @@
 #include "Grabber.h"
 
+Grabber::Logger::Logger(Grabber & c) :
+	core(c)
+{}
+
 void Grabber::Logger::multi(int bits, std::string const& text) const {
 	if (bits & LT_MESSAGE) {
 		message(text);
@@ -14,7 +18,7 @@ void Grabber::Logger::multi(int bits, std::string const& text) const {
 		error(text);
 	}
 	if (bits & LT_DEBUG) {
-		debug(text);
+		debug(0,text);
 	}
 }
 
@@ -43,9 +47,11 @@ void Grabber::Logger::error(std::string const& text) const {
 	}
 }
 
-void Grabber::Logger::debug(std::string const& text) const {
+void Grabber::Logger::debug(int level, std::string const& text) const {
 	if (core.conf.loggerFlags & LT_DEBUG) {
-		std::cout << "[Debug] " << text << std::endl;
+		if (level <= core.conf.loggerDebugLevel) {
+			std::cout << "[Debug] " << text << std::endl;
+		}
 	}
 }
 

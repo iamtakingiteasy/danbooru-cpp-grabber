@@ -10,13 +10,15 @@ class DownloaderLoader : public GenericLoader {
 	private:
 		downloader_create_t  * createPtr;
 		downloader_destroy_t * destroyPtr;
+		DownloaderInterface  * instance;
 	public:
 		DownloaderLoader();
-		~DownloaderLoader() {}
+		~DownloaderLoader();
 	public:
+		DownloaderInterface * getInstance();
 		void loadDownloader(std::string const& filepath);
 		DownloaderInterface * create() const;
-		void destroy(DownloaderInterface * instance) const;
+		void destroy(DownloaderInterface * inst) const;
 };
 
 #endif

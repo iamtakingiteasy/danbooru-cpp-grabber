@@ -1,33 +1,47 @@
+#ifndef DANBOORU_CPP_GRABBER_GENERIC_OPTPARSER
+#define DANBOORU_CPP_GRABBER_GENERIC_OPTPARSER
+
 #include <ctype.h>
 #include <getopt.h>
 
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <string>
 
+typedef void optionHandler(std::string const& optArg, void *userPtr);
+
+class Option {
+	public:
+		std::string optShort;       ///< short version
+		std::string optLong;        ///< long version
+		std::string optArg;         ///< argument name
+		std::string optDescr;       ///< --help description
+		optionHandler * optHandler; ///< option handler function
+		void * usrPtr;              ///< usrPtr value
+	public:
+		Option(
+			std::string const& optShort,
+			std::string const& optLong,
+			std::string const& optArg,
+			std::string const& optDescr,
+			optionHandler optHandler,
+			void * usrPtr
+		) :
+			optShort(optShort),
+			optLong(optLong),
+			optArg(optArg),
+			optDescr(optDescr),
+			optHandler(optHandler),
+			usrPtr(usrPtr)
+		{}
+};
+
+
 /// Option parser class, serving the purpose of parsing command-line
 /// options and generating --help options listing.
 class OptParser {
-	private:
-		class Option {
-			public:
-				std::string optShort; ///< short version
-				std::string optLong;  ///< long version
-				std::string optArg;   ///< argument name
-				std::string optDescr; ///< --help description
-			public:
-				Option(
-					std::string const& optShort,
-					std::string const& optLong,
-					std::string const& optArg,
-					std::string const& optDescr
-				) :
-					optShort(optShort),
-					optLong(optLong),
-					optArg(optArg),
-					optDescr(optDescr)
-				{}
-		};
+	public:
 	private:
 		size_t termWidth;              ///< width of terminal wrap to
 		size_t shortMaxLen;            ///< maximum length of short option
@@ -38,7 +52,6 @@ class OptParser {
 		size_t paddingMiddle;          ///< padding between option an description
 		std::vector<Option> options;   ///< internal options representation
 		size_t totalOptions;           ///< total number of options
-		struct option * getOptOptions; ///< set of getopt() options
 	private:
 		// Unlike strtok() this function is thread-safe and do not requires
 		// widechars to operate with like wcstok(). Also this can be implementd
@@ -93,7 +106,6 @@ class OptParser {
 		}
 	public:
 		OptParser() {
-			getOptOptions = NULL;
 			totalOptions  = 0;
 			termWidth     = 80;
 			paddingBefore = 4;
@@ -104,7 +116,6 @@ class OptParser {
 			descrMaxLen   = 0;
 		}
 		~OptParser(){
-			delete[] getOptOptions;
 		}
 	public:
 		/// Pushes back option to option list
@@ -113,23 +124,30 @@ class OptParser {
 		/// \param[in] l ong optiion name
 		/// \param[in] a rgument name
 		/// \param[in] d escription of option
+		/// \param[in] h andler function
+		/// \param[in] u sr pointer
 		void push_back(
+			Option opt
+			/*
 			std::string const& s,
 			std::string const& l,
 			std::string const& a,
-			std::string const& d
+			std::string const& d,
+			optionHandler      h,
+			void *             u
+			*/
 		) {
-			Option opt(s,l,a,d);
-			size_t sl = s.length();
-			size_t ll = l.length();
-			size_t al = a.length();
-			size_t dl = d.length();
+//			Option opt(s,l,a,d,h,u);
+			size_t dl = opt.optDescr.length();
+			size_t sl = opt.optShort.length();
+			size_t ll = opt.optLong.length();
+			size_t al = opt.optArg.length();
 
 			if (sl) totalOptions++; // we need
 			if (ll) totalOptions++; //  both!
 
-			if (!a.empty()) {
-				if (!s.empty() && l.empty()) {
+			if (!opt.optArg.empty()) {
+				if (!opt.optShort.empty() && opt.optLong.empty()) {
 					sl += 1 + al;
 				} else {
 					ll += 1 + al;
@@ -149,10 +167,14 @@ class OptParser {
 		void setTermWidth(size_t width) {
 			termWidth = width;
 		}
+		static bool optionSorter(Option const& l, Option const& r) {
+			return (l.optShort < r.optShort);
+		}
 		/// Generates --help dialog
 		void genHelp() {
 			std::vector<Option>::const_iterator oit;
 			std::vector<std::string>::const_iterator wit;
+			std::sort(options.begin(),options.end(),&OptParser::optionSorter);
 			for (oit = options.begin(); oit != options.end(); oit++) {
 				std::string const& sn = oit->optShort;
 				std::string const& ln = oit->optLong;
@@ -228,13 +250,12 @@ class OptParser {
 				while (wit != dnWords.end()) {
 					std::string longSuffix = "\n";
 					longSuffix.resize(prefixLen,' ');
-					if ((longSuffix.length() + 1 + wit->length()) > termWidth) {
+					if ((longSuffix.length() + 1 + wit->length()) >= termWidth) {
 						longSuffix.clear();
 						while (wit != dnWords.end()) {
 							longSuffix += " " + *wit;
 							wit++;
 						}
-					} else {
 					}
 					for (;
 						 wit != dnWords.end() &&
@@ -254,11 +275,11 @@ class OptParser {
 		/// gen getOpt option list from internal structure
 		///
 		/// \return NULL-terminated array of options
-		struct option * genGetOptOptions() {
+		void parseOptions(int argc, char ** argv) {
 			std::vector<Option>::const_iterator oit;
 			size_t index = 0;
-			delete[] getOptOptions;
-			getOptOptions = new struct option[totalOptions+1];
+			int i;
+			struct option * getOptOptions = new struct option[totalOptions+1];
 
 			for (oit = options.begin(); oit != options.end(); oit++) {
 				std::string const& sn = oit->optShort;
@@ -282,7 +303,24 @@ class OptParser {
 			getOptOptions[index].has_arg = 0;
 			getOptOptions[index].flag    = 0;
 			getOptOptions[index].val     = 0;
-			return getOptOptions;
+			
+			while (getopt_long_only(argc,argv,"",getOptOptions,&i) != -1) {
+				for (oit = options.begin(); oit != options.end(); oit++) {
+					std::string o  = getOptOptions[i].name;
+					std::string an;
+					if (optarg) an = optarg;
+					
+					if (o == oit->optShort || o == oit->optLong) {
+						oit->optHandler(an,oit->usrPtr);
+						break;
+					}
+				}
+			}
+			
+			delete[] getOptOptions;
 		}
 		
 };
+
+
+#endif

@@ -3,8 +3,10 @@
 
 #include <string>
 #include <ostream>
+#include <vector>
+#include <danbooru-cpp-grabber/Module.h>
 
-class DownloaderInterface {
+class DownloaderInterface : public ModuleInterface {
 	protected:
 		std::string url;
 		std::ostream *os;

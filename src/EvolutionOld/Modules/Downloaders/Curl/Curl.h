@@ -11,11 +11,16 @@ class CurlDownloader : public DownloaderInterface {
 	private:
 		size_t static writeData(void *buffer, size_t size, size_t nmemb, void *userp);
 	public:
-		CurlDownloader() : DownloaderInterface() {}
+		CurlDownloader() : DownloaderInterface() {
+			curl = NULL;
+		}
 		~CurlDownloader();
+		static void hShorty(std::string const& arg, void * usr) {
+		}
 	public:
 		void actualPrepare();
 		void actualFetch();
+		std::vector<Option> getOptions();
 };
 
 #endif

@@ -41,7 +41,7 @@ void Modular::load(std::string const& filepath) {
 
 void Modular::unload() {
 	if (!wasLoaded) {
-		throw ModularException(path,"already loaded");
+		return;
 	}
 	#ifdef HAVE_UNIX_MODULAR
 	dlclose(handle);

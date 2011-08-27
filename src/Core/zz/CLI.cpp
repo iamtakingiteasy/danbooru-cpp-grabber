@@ -1,7 +1,9 @@
 #include "Application.h"
+#include "CLIInteractor.h"
 
 int main(int argc, char ** argv) {
-	Application core;
+	f
+	Core core(CLIInteractor);
 	core.run(argc,argv);
 	return 0;
 }

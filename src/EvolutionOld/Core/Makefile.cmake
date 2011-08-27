@@ -1,9 +1,12 @@
 set(core-sources
     ${CORE_DIR}/Main.cpp
-    ${CORE_DIR}/Application.cpp
-    ${CORE_DIR}/OptParser.cpp
-    ${CORE_DIR}/Modular.cpp
-    ${CORE_DIR}/ModuleLoader.cpp
+    ${CORE_DIR}/Grabber.cpp
+    ${CORE_DIR}/Logger.cpp
+    ${CORE_DIR}/CLIInteractor.cpp
+    ${CORE_DIR}/Loaders/Modular.cpp
+    ${CORE_DIR}/Loaders/Generic.cpp
+    ${CORE_DIR}/Loaders/Downloader.cpp
+    ${CORE_DIR}/ModuleCollection.cpp
 )
 
 if(HAVE_DLOPEN)

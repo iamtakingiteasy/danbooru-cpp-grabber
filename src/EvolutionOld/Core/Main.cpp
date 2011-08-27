@@ -1,7 +1,7 @@
-#include "Application.h"
+#include "Grabber.h"
 
 int main(int argc, char ** argv) {
-	Application core;
+	Grabber core;
 	core.run(argc,argv);
 	return 0;
 }
