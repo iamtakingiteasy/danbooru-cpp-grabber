@@ -97,6 +97,8 @@ void Application::run(int argc, char ** argv) {
 		
 
 	opt.parseCoreOptions(argc,argv);
+
+	modules.load();
 	
 	switch (conf.action) {
 	case GA_NONE:

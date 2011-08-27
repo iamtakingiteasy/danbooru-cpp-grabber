@@ -34,8 +34,8 @@ class ModuleLoader {
 			version = *(std::string *)handle.sym("moduleVersion");
 			descr   = *(std::string *)handle.sym("moduleDescr");
 
-			createPtr  = (Create *)(intptr_t)handle.sym("create");
-			destroyPtr = (Create *)(intptr_t)handle.sym("destroy");
+			createPtr  = (Create  *)(intptr_t)handle.sym("create");
+			destroyPtr = (Destroy *)(intptr_t)handle.sym("destroy");
 
 			instance = createPtr();
 		}

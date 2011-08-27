@@ -1,8 +1,9 @@
 message(STATUS
     "*** Modules:"
 )
+set(MODULES_INTERFACES_DIR ${MODULES_DIR}/Interfaces)
 set(MODULES_DOWNLOADERS_DIR ${MODULES_DIR}/Downloaders)
-#set(MODULES_BOARDS_DIR ${MODULES_DIR}/Boards)
 
+include(${MODULES_INTERFACES_DIR}/Makefile.cmake)
 include(${MODULES_DOWNLOADERS_DIR}/Makefile.cmake)
-#include(${MODULES_BOARDS_DIR}/Makefile.cmake)
+

@@ -9,8 +9,8 @@
 
 class Module {
 	public:
-		ModuleInterface() {}
-		virtual ~ModuleInterface() {}
+		Module() {}
+		virtual ~Module() {}
 	public:
 		virtual void init(Hash * o, Logger * l) = 0;
 		virtual std::vector<Option> getOptions()= 0;

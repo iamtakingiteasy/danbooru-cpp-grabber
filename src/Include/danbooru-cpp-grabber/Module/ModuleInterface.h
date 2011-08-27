@@ -3,9 +3,12 @@
 
 #include "Module.h"
 
-class ModuleInterface : Module {
+class ModuleInterface : public Module {
 	public:
-		
+		virtual void interact() = 0;
 };
+
+typedef ModuleInterface * interface_create_t();
+typedef void interface_destroy_t(ModuleInterface *);
 
 #endif

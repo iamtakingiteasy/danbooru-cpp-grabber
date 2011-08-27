@@ -4,6 +4,7 @@ set(core-sources
     ${CORE_DIR}/OptParser.cpp
     ${CORE_DIR}/Modular.cpp
     ${CORE_DIR}/ModuleLoader.cpp
+    ${CORE_DIR}/ModuleManager.cpp
 )
 
 if(HAVE_DLOPEN)

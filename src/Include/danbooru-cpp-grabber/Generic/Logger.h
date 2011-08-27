@@ -42,9 +42,9 @@ class Logger {
 			if (conf->verbose & VL_DEBUG) {
 				if (level <= conf->debugLevel) {
 					std::cout << facility
-							  << "[Debug["
+							  << "[Debug "
 							  << level
-							  << "]] "
+							  << "] "
 							  << text
 							  << std::endl;
 				}

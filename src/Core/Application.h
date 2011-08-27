@@ -16,9 +16,11 @@ class Application {
 		Config conf;
 		Logger log;
 		OptParser opt;
+		ModuleManager modules;
 	public:
 		Application() :
-			log(&conf,"")
+			log(&conf,""),
+			modules(&conf,&log,&opt)
 		{}
 		~Application() {}
 	public:
