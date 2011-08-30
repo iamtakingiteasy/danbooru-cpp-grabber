@@ -11,4 +11,4 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/tests/collection/libs/curl.cmake)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/tests/include/config.cmake 
-    include/cmake_config.h)
+    include/config.h)

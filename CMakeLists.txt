@@ -2,10 +2,10 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-add_definitions(-pedantic -Wall -g)
+add_definitions(-pedantic -Wall -g -pg -g)
 
-set(CMAKE_EXE_LINKER_FLAGS "-s")
-set(CMAKE_MODULE_LINKER_FLAGS "-s")
+set(CMAKE_EXE_LINKER_FLAGS "-pg -g")
+set(CMAKE_MODULE_LINKER_FLAGS "-pg -g")
 
 if(WIN32)
     set(CMAKE_CXX_FLAGS 
@@ -32,4 +32,4 @@ set(CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/Core)
 set(MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/Modules)
 
 include(${CORE_DIR}/Makefile.cmake)
-include(${MODULES_DIR}/Makefile.cmake)
+#include(${MODULES_DIR}/Makefile.cmake)
