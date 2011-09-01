@@ -5,10 +5,17 @@
 
 #include <dcppg/Interfaces/Module.h>
 #include <dcppg/CoreInteract/CoreModule.h>
+#include <dcppg/CoreInteract/CoreOption.h>
 #include <dcppg/Data/ModuleInfo.h>
 
 #include "IO.h"
 #include "ModuleLoader.h"
+
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
 
 
 #include <map>
@@ -18,7 +25,10 @@
 class ModuleManager {
 	private:
 		IO *iIO;
+		Logger const* log;
 		modulemapmap iModules;
+	private:
+		void scanDir(std::string const& path, int depth);
 	public:
 		ModuleManager() {
 		}
@@ -35,8 +45,10 @@ class ModuleManager {
 			}
 		}
 	public:
+		modulemapmap * getModules();
 		void io(IO * iio);
-		void pushCore(ModuleInterface * instance);
+		void pushCore(ModuleInterface * instance, CoreOption * opt);
+		void loadModules();
 };
 
 #endif

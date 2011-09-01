@@ -48,10 +48,12 @@ void IO::error  (std::string const& facility, std::string const& text) const {
 void IO::debug  (std::string const& facility, int level, std::string const& text)
 	const {
 	if (iFlags & IOBIT_DEBUG) {
-		if (iShowFacility) std::cout << "(" << facility << ")";
-		if (iShowGroups && iShowFacility) std::cout << " ";
-		if (iShowGroups) std::cout << "[Debug" << level << "] ";
-		std::cout << text << std::endl;
+		if (level <= iDebugLevel) {
+			if (iShowFacility) std::cout << "(" << facility << ")";
+			if (iShowGroups && iShowFacility) std::cout << " ";
+			if (iShowGroups) std::cout << "[Debug" << level << "] ";
+			std::cout << text << std::endl;
+		}
 	}
 }
 

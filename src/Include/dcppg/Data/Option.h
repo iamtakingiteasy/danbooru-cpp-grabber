@@ -34,9 +34,15 @@ class Option  {
 			optDescr(optDescr)
 		{}
 	public:
-		bool operator()(Option const& a, Option const& b) const {
-			return a.optShort < b.optShort;
-		}
+		class comparator {
+			public:
+				bool operator()(Option const& a, Option const& b) const {
+					return (a.optShort   != b.optShort   ||
+							a.optLong    != b.optLong    ||
+							a.optHandler != b.optHandler ||
+							a.optArg     != b.optArg);
+				}
+		};
 };
 
 

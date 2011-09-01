@@ -41,12 +41,16 @@ class ModuleLoader : public CoreModule {
 		ModuleInfo const& getInfo() const {
 			return iInfo;
 		}
+		Logger const& getLogger() const {
+			return iLog;
+		}
 		Hash<std::string> const& getConf() const {
 			return iCoreInteract.iCfg;
 		}
 		void fromCore(I * instance,
 					  IO const* io,
-					  modulemapmap const* modmap) {
+					  modulemapmap const* modmap,
+					  CoreOption * opt) {
 			iInstance = instance;
 			iCreate   = NULL;
 			iDestroy  = NULL;
@@ -59,10 +63,11 @@ class ModuleLoader : public CoreModule {
 
 			iCoreInteract.pLog = &iLog;
 			iCoreInteract.pMod = modmap;
+			iCoreInteract.pOpt = opt;
 
 			iInstance->setCore(&iCoreInteract);
 			iInstance->init();
-			iInstance->runmod();
+//			iInstance->runmod();
 		}
 		void reload() {
 		}

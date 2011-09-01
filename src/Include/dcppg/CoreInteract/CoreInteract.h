@@ -3,10 +3,12 @@
 
 #include <dcppg/CoreInteract/CoreLogger.h>
 #include <dcppg/CoreInteract/CoreModule.h>
+#include <dcppg/CoreInteract/CoreOption.h>
 #include <dcppg/Data/Hash.h>
 
 class CoreInteract {
 	public:
+		CoreOption        * pOpt;
 		CoreLogger   const* pLog;
 		modulemapmap const* pMod;
 		Hash<std::string>   iCfg;

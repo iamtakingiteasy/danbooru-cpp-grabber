@@ -66,7 +66,7 @@ void * ModuleSymer::sym(std::string const& symname) {
 	errorMessage = dlerror();
 	#endif
 	#ifdef HAVE_WIN_MODULAR
-	ptr = (void *)(intptr_t)GetProcAddress((HINSTANCE__*)handle,symname.c_str());
+	ptr = (void *)(uintptr_t)GetProcAddress((HINSTANCE__*)handle,symname.c_str());
 	#endif
 
 	#ifdef HAVE_UNIX_MODULAR

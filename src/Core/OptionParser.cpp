@@ -5,7 +5,7 @@ void OptionParser::fillOptionStructure(
 	std::string const& arg,
 	struct option * opt
 ) {
-	opt->name = name.c_str();
+	opt->name = (char *)name.c_str();
 	if (!arg.empty()) {
 		opt->has_arg = required_argument;
 	} else {
@@ -25,9 +25,24 @@ void OptionParser::group(bool value) {
 	iGroup = value;
 }
 
+void OptionParser::facilizeSwitch() {
+	iFacilize ^= 1;
+}
+void OptionParser::groupSwitch() {
+	iGroup ^= 1;
+}
 
 void OptionParser::width(size_t width) {
 	iWidth = width;
+}
+
+void OptionParser::modules(modulemapmap const* p) {
+	pModules = p;
+}
+
+void OptionParser::arguments(int argc, char ** argv) {
+	pArgc = argc;
+	pArgv = argv;
 }
 
 std::vector<std::string> OptionParser::wordifier (std::string const& text) {
@@ -82,6 +97,7 @@ void OptionParser::hScanner(
 	if (dl > that->iDescrMaxLen) that->iDescrMaxLen = dl;
 
 	that->iOptions[group][facility].insert(opt);
+	that->iPlainOptions.insert(opt);
 }
 
 bool hOutterSort(
@@ -214,13 +230,13 @@ std::string const& OptionParser::genHelp() {
 		std::string,
 		std::map<
 			std::string,
-			std::set<Option,Option> > >::const_iterator git;
+			std::set<Option,Option::comparator> > >::const_iterator git;
 
 	std::map<
 		std::string,
-		std::set<Option,Option> >::const_iterator fit;
+		std::set<Option,Option::comparator> >::const_iterator fit;
 
-	std::set<Option,Option>::const_iterator it;
+	std::set<Option,Option::comparator>::const_iterator it,cit;
 
 	for (git = iOptions.begin(); git != iOptions.end(); git++) {
 		if (iGroup) {
@@ -231,31 +247,56 @@ std::string const& OptionParser::genHelp() {
 				helpResult += "    *** " + fit->first + " module\n";
 			}
 			for (it = fit->second.begin(); it != fit->second.end(); it++) {
+				int longDups  = 0;
+				int shortDups = 0;
+				for (cit = iPlainOptions.begin(); cit != iPlainOptions.end(); cit++) {
+					if (cit->optShort == it->optShort) {
+						shortDups++;
+					}
+					if (cit->optLong == it->optLong) {
+						longDups++;
+					}
+				}
+				if (longDups > 1 || shortDups > 1) {
+					helpResult += "(";
+					if (shortDups > 1) {
+						helpResult += "SHORT ";
+					}
+					if (shortDups > 1 && longDups > 1) {
+						helpResult += "AND ";
+					}
+					if (longDups > 1) {
+						helpResult += "LONG ";
+					}
+					helpResult +=
+						"OPTIONS DUPLICATED in "
+						+ git->first + "@"
+						+ fit->first + ")";
+				}
 				helpResult += genHelpEntry(*it) += "\n";
 			}
 		}
 	}
-	std::cout << helpResult;
 	return helpResult;
 }
 
-void OptionParser::parseOpts(int argc, char ** argv) {
+void OptionParser::parseOpts() {
 	std::map<
 		std::string,
 		std::map<
 			std::string,
-			std::set<Option,Option> > >::const_iterator git;
+			std::set<Option,Option::comparator> > >::const_iterator git;
 
 	std::map<
 		std::string,
-		std::set<Option,Option> >::const_iterator fit;
+		std::set<Option,Option::comparator> >::const_iterator fit;
 
-	std::set<Option,Option>::const_iterator it;
+	std::set<Option,Option::comparator>::const_iterator it;
 
 	struct option * getOptOptions = new struct option[iTotalOptions+1];
 
 	size_t fillIndex = 0;
-	int    optIndex  = 0;
+	int    optIndex  = -1;
 
 
 	for (git = iOptions.begin(); git != iOptions.end(); git++) {
@@ -278,12 +319,24 @@ void OptionParser::parseOpts(int argc, char ** argv) {
 	getOptOptions[fillIndex].flag    = 0;
 	getOptOptions[fillIndex].val     = 0;
 
-	while(getopt_long_only(argc,argv,"",getOptOptions,&optIndex) != -1) {
-		for (git = iOptions.begin(); git != iOptions.end(); git++) {
-			for(fit = git->second.begin(); fit != git->second.end(); fit++) {
-				for (it = fit->second.begin(); it != fit->second.end(); it++) {
-					
-				}
+	if (iIgnoreUnknown) {
+		opterr = 0;
+	} else {
+		opterr = 1;
+	}
+	while(getopt_long_only(pArgc,pArgv,"",getOptOptions,&optIndex) != -1) {
+		if (optIndex < 0) continue;
+		std::string o;
+		std::string an;
+		if (optarg) an = optarg;
+		if (getOptOptions[optIndex].name) o = getOptOptions[optIndex].name;
+		optIndex = -1;
+		for (it = iPlainOptions.begin(); it != iPlainOptions.end(); it++) {
+			std::string const& sn = it->optShort;
+			std::string const& ln = it->optLong;
+			if (o == sn || o == ln) {
+				it->optHandler(an,it->usrPtr);
+				break;
 			}
 		}
 	}

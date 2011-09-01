@@ -22,6 +22,7 @@ class Logger : public CoreLogger {
 		Logger() {
 			iIO = NULL;
 		}
+		virtual ~Logger() {}
 	public:
 		void io(IO const* iio);
 		void facility(std::string const& facility);

@@ -12,12 +12,14 @@ class Hash {
 			HASH_EMPTY   = 1<<0,
 			HASH_INTEGER = 1<<1,
 			HASH_TEXTUAL = 1<<2,
+//			HASH_VOID    = 1<<3,
 			HASH_VECTOR  = 1<<3,
 			HASH_MAP     = 1<<4
 		};
 	private:
 		int               type;
 		int               integer;
+//		void      *       ptr;
 		std::string       textual;
 		std::vector<Hash> vectorData;
 		std::map<T, Hash> mapData;
@@ -43,7 +45,11 @@ class Hash {
 		Hash(char const* value) {
 			textual = value;
 			type |= HASH_TEXTUAL;
-		}	
+		}
+//		Hash(void * value) {
+//			ptr = value;
+//			type |= HASH_VOID;
+//		}	
 		Hash(std::string const& value) {
 			textual = value;
 			type |= HASH_TEXTUAL;
@@ -58,7 +64,12 @@ class Hash {
 			textual = value;
 			type |= HASH_TEXTUAL;
 			return *this;
-		}	
+		}
+//		Hash & operator=(void * value) {
+//			ptr = value;
+//			type |= HASH_VOID;
+//			return *this;
+//		}	
 		Hash & operator=(std::string const& value) {
 			textual = value;
 			type |= HASH_TEXTUAL;
@@ -73,36 +84,40 @@ class Hash {
 			type |= HASH_VECTOR;
 			vectorData.push_back(Hash(value));
 		}
+//		void push_back(void * value) {
+//			type |= HASH_VOID;
+//			vectorData.push_back(Hash(value));
+//		}
 		void push_back(std::string const& value) {
 			type |= HASH_VECTOR;
 			vectorData.push_back(Hash(value));
 		}
 	public:
 	
-		Hash const& operator[](int index) const {
-			return vectorData[index];
-		}
+//		Hash const& operator[](int index) const {
+//			return vectorData[index];
+//		}
 		Hash const& operator[](char const* name) const {
 			return mapData.find(T(name))->second;
 		}
-		Hash const& operator[](void const* name) const {
-			return mapData.find(T(name))->second;
-		}
+//		Hash const& operator[](void const* name) const {
+//			return mapData.find(T(name))->second;
+//		}
 		Hash const& operator[](T const& name) const {
 			return mapData.find(name)->second;
 		}
 
-		Hash & operator[](int index) {
-			return vectorData[index];
-		}
+//		Hash & operator[](int index) {
+//			return vectorData[index];
+//		}
 		Hash & operator[](char const* name) {
 			type |= HASH_MAP;
 			return mapData[T(name)];
 		}
-		Hash & operator[](void const* name) {
-			type |= HASH_MAP;
-			return mapData[T(name)];
-		}
+//		Hash & operator[](void const* name) {
+//			type |= HASH_MAP;
+//			return mapData[T(name)];
+//		}
 		Hash & operator[](T const& name) {
 			type |= HASH_MAP;
 			return mapData[name];
@@ -111,13 +126,16 @@ class Hash {
 		operator int() const {
 			return integer;
 		}
-		operator std::string const&() const {
+		operator std::string () const {
 			return textual;
 		}
-		operator std::vector<Hash> const&() const {
+		operator std::vector<Hash> () const {
 			return vectorData;
 		}
-		operator std::map<T,Hash> const&() const {
+//		operator void *() const {
+//			return ptr;
+//		}
+		operator std::map<T,Hash> () const {
 			return mapData;
 		}
 	public:

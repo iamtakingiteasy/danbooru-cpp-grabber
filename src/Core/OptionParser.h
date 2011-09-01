@@ -8,32 +8,43 @@
 
 #include <dcppg/Data/ModuleInfo.h>
 #include <dcppg/CoreInteract/CoreModule.h>
+#include <dcppg/CoreInteract/CoreOption.h>
 
 #include <vector>
 #include <iostream>
 #include <set>
 #include <string>
 
-class OptionParser {
+class OptionParser : public CoreOption {
 	private:
-		size_t iWidth;
-		size_t iShortMaxLen;
-		size_t iLongMaxLen;
-		size_t iArgMaxLen;
-		size_t iDescrMaxLen;
-		size_t iPaddingBefore;
-		size_t iPaddingMiddle;
-		size_t iTotalOptions;
+		int     pArgc;
+		char ** pArgv;
+		size_t  iWidth;
+		size_t  iShortMaxLen;
+		size_t  iLongMaxLen;
+		size_t  iArgMaxLen;
+		size_t  iDescrMaxLen;
+		size_t  iPaddingBefore;
+		size_t  iPaddingMiddle;
+		size_t  iTotalOptions;
 
 		modulemapmap const* pModules;
 		bool iIgnoreUnknown;
 		bool iFacilize;
 		bool iGroup;
-		std::map<std::string,std::map<std::string,std::set<Option,Option> > > iOptions;
+		
+		std::map<
+			std::string,
+			std::map<
+				std::string,
+				std::set<Option,Option::comparator> > > iOptions;
+
+		
+		std::set<Option,Option::comparator> iPlainOptions;
 		std::string helpResult;
 	public:
-		OptionParser(modulemapmap const* p) {
-			pModules       = p;
+		OptionParser() {
+			pModules       = NULL;
 			iTotalOptions  = 0;
 			iWidth         = 80;
 			iPaddingBefore = 4;
@@ -46,6 +57,7 @@ class OptionParser {
 			iFacilize      = false;
 			iGroup         = true;
 		}
+		virtual ~OptionParser() {}
 	private:
 		void fillOptionStructure(
 			std::string const& name,
@@ -69,11 +81,15 @@ class OptionParser {
 		void ignoreUnknown(bool value);
 		void facilize(bool value);
 		void group(bool value);
+		void facilizeSwitch();
+		void groupSwitch();
 		void width(size_t width);
+		void modules(modulemapmap const* p);
+		void arguments(int argc, char ** argv);
 	public:
 		void collectOpts();
 		std::string const& genHelp();
-		void parseOpts(int argc, char ** argv);
+		void parseOpts();
 };
 
 #endif

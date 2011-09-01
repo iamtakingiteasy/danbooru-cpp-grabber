@@ -13,7 +13,7 @@ class ModuleInfo {
 		std::string author;
 		std::string version;
 		std::string descr;
-		std::set<Option,Option> options;
+		std::set<Option,Option::comparator> options;
 	public:
 		ModuleInfo() {}
 		ModuleInfo(
@@ -21,7 +21,7 @@ class ModuleInfo {
 			std::string const& author,
 			std::string const& version,
 			std::string const& descr,
-			std::set<Option,Option> options
+			std::set<Option,Option::comparator> options
 		) :
 			name(name),
 			author(author),

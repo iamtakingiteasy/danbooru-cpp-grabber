@@ -2,10 +2,10 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-add_definitions(-pedantic -Wall -g -pg -g)
+add_definitions(-pedantic -Wall -g)
 
-set(CMAKE_EXE_LINKER_FLAGS "-pg -g")
-set(CMAKE_MODULE_LINKER_FLAGS "-pg -g")
+set(CMAKE_EXE_LINKER_FLAGS "-s")
+set(CMAKE_MODULE_LINKER_FLAGS "-s")
 
 if(WIN32)
     set(CMAKE_CXX_FLAGS 

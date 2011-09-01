@@ -11,6 +11,7 @@
 
 #include <string>
 
+#include <stdlib.h>
 #ifdef HAVE_IOCTL
 #      include <sys/ioctl.h>
 #endif
@@ -24,10 +25,26 @@ class Core : public ModuleInterface {
 		ModuleInfo    iInfo;
 		ModuleManager iModule;
 		IO            iIO;
+		OptionParser  iOpt;
+		int     pArgc;
+		char ** pArgv;
 	private:
 		void fillCoreInfo(ModuleInfo & info);
 	private:
 		static void hHelp(std::string const& arg, void * usr);
+		static void hHelpFacilize(std::string const& arg, void * usr);
+		static void hHelpGroupped(std::string const& arg, void * usr);
+		static void hVersion(std::string const& arg, void * usr);
+		static void hVerbose(std::string const& arg, void * usr);
+		static void hVeryVerbose(std::string const& arg, void * usr);
+		static void hModulePath(std::string const& arg, void * usr);
+		static void hModuleRecurDepth(std::string const& arg, void * usr);
+		static void hModuleInterface(std::string const& arg, void * usr);
+		static void hListAll(std::string const& arg, void * usr);
+		static void hListInterfaces(std::string const& arg, void * usr);
+		static void hListDownloaders(std::string const& arg, void * usr);
+		static void hListParsers(std::string const& arg, void * usr);
+		static void hListHandlers(std::string const& arg, void * usr);
 	public:
 		void init();
 		void runmod();
