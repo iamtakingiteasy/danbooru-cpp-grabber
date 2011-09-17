@@ -1,101 +1,123 @@
 #include "grabber.hpp"
+#include <stdlib.h>
 
-char Grabber::set_action(void * context, void * input) {
-    Grabber * g = (Grabber*)context;
-    int act = *(int*)input;
-    g->action = act;
-    return 1;
-}
-
-char Grabber::or_verbose(void * context, void * input) {
-    Grabber * g = (Grabber*)context;
-    int lev = *(int*)input;
-    g->verbosity |= lev;
-    return 1;
-}
-
-char Grabber::push_module_path(void * context, void * input) {
-    Grabber * g = (Grabber*)context;
-    char const* str = (char const*)input;
-    g->modules_paths.push_back(str);
-    return 1;
-}
-
-char Grabber::set_recursion_depth(void * context, void * input) {
-    Grabber * g = (Grabber*)context;
-    int lev = atoi((char *)input);
-    if (lev < 0) return 0;
-    g->recurse_level = lev;
-    return 1;
-}
-
-
-void Grabber::push_option(char const* domain, Option opt) {
-    opt.domain = domain;
-    modules_options.push_back(&opt,sizeof(Option));    
-}
-
-void Grabber::grabber_init() {
-    recurse_level = 3;
-
-    modules_paths.push_back("~/.config/dcppg/modules");
-    modules_paths.push_back("/usr/lib/dcppg/modules");
+void Grabber::push_option(ModuleType group, char const* domain, Option opt) {
+    Option__private__ optpriv;
+    optpriv.opt = opt;
+    optpriv.name = domain;
+    switch (group) {
+    case MT_NONE:
+	optpriv.group = "MALICIOUS";
+	break;
+    case MT_CORE:
+	optpriv.group = "Core";
+	break;
+    case MT_DOWNLOADER:
+	optpriv.group = "Downloaders";
+	break;
+    case MT_PARSER:
+	optpriv.group = "Parsers";
+	break;
+    case MT_HANDLER:
+	optpriv.group = "Handlers";
+	break;
+    }
     
+    modules_options.push_back(optpriv);
+}
 
+int Grabber::set_action(void * context, void * value) {
+    Grabber * g = (Grabber*)context;
+    int v = *(int*)value;
+    g->action = v;
+    return 1;
+}
+int Grabber::or_verbosity(void * context, void * value) {
+    Grabber * g = (Grabber*)context;
+    int v = *(int*)value;
+    g->verbosity |= v;
+    return 1;
+}
+int Grabber::push_module_path(void * context, void * value) {
+    Grabber * g = (Grabber*)context;
+    char const* path = (char const*)value;
+    g->modules_paths.push_back(path);
+    return 1;
+}
+int Grabber::set_recutsion_depth(void * context, void * value) {
+    Grabber * g = (Grabber*)context;
+    int v = atoi((char const*)value);
+    if (v < 0) return 0;
+    g->recursion_depth = v;
+    return 1;
+}
+
+void Grabber::grabber_init(int ac, char ** av) {
+    argc = ac;
+    for (int i = 0; i < ac; i++) {
+	argv.push_back(av[i]);
+    }
     action = GA_HELP;
     verbosity = VL_MESSAGE | VL_NOTICE | VL_WARN | VL_ERROR;
 
-    ModuleInfo core_info;
-    core_info.type    = MT_CORE;
-    core_info.name    = "Core";
-    core_info.descr   = "Grabber Core";
-    core_info.version = "1.0";
-    core_info.author  = "Alexander <itakingiteasy> Tumin";
+    modules_paths.push_back("~/.config/dcppg/modules");
+    modules_paths.push_back("/usr/lib/dcppg/modules");
 
-    modules_info.push_back(&core_info,sizeof(ModuleInfo));
-
-    push_option(core_info.name,OptionWrapper(
+    ModuleInfo core_info = CPPModuleInfo(
+	ML_CPP,
+	MT_CORE,
+	"Core",
+	"Grabber core",
+	"1.0",
+	"Alexander <itakingiteasy> Tumin"
+    ).get();
+    
+    modules_info.push_back(core_info);
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Displays this help message",
-		    "h","help","",this,GA_HELP,set_action).get_opt());
-    push_option(core_info.name,OptionWrapper(
+		    "h","help","",this,GA_HELP,
+		    set_action).get());
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Displays version info",
-		    "V","version","",this,GA_VERSION,set_action).get_opt());
+		    "v","version","",this,GA_VERSION,
+		    set_action).get());
 
-    push_option(core_info.name,OptionWrapper(
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Lists all modules",
-		    "la","list-all","",this,GA_LIST_ALL,set_action).get_opt());
-    push_option(core_info.name,OptionWrapper(
-		    "Lists downloaders modules",
+		    "la","list-all","",this,GA_LIST_ALL,
+		    set_action).get());
+    push_option(core_info.type, core_info.name, CPPOption(
+		    "Lists downloader modules",
 		    "ld","list-downloaders","",this,GA_LIST_DOWNLOADERS,
-		    set_action).get_opt());
-    push_option(core_info.name,OptionWrapper(
+		    set_action).get());
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Lists parser modules",
 		    "lp","list-parsers","",this,GA_LIST_PARSERS,
-		    set_action).get_opt());
-    push_option(core_info.name,OptionWrapper(
-		    "Lists handlers modules",
+		    set_action).get());
+    push_option(core_info.type, core_info.name, CPPOption(
+		    "Lists handler modules",
 		    "lh","list-handlers","",this,GA_LIST_HANDLERS,
-		    set_action).get_opt());
+		    set_action).get());
 
-    push_option(core_info.name,OptionWrapper(
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Increases verbosity level",
-		    "v","verbose","",this,VL_DEBUG1,or_verbose).get_opt());
-    push_option(core_info.name,OptionWrapper(
+		    "v","verbose","",this,VL_DEBUG1,
+		    or_verbosity).get());
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Increases verbosity level more",
-		    "vv","very-verbose","",this,VL_DEBUG2,or_verbose).get_opt());
-    push_option(core_info.name,OptionWrapper(
+		    "vv","very-verbose","",this,VL_DEBUG2,
+		    or_verbosity).get());
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Increases verbosity level even more",
-		    "vvv","very-very-verbose","",this,VL_DEBUG3,or_verbose).get_opt());
+		    "vvv","very-very-verbose","",this,VL_DEBUG3,
+		    or_verbosity).get());
 
-    push_option(core_info.name,OptionWrapper(
-		    "Specifies additional search path",
-		    "mp","module-path","DIR",this,0,push_module_path).get_opt());
-    push_option(core_info.name,OptionWrapper(
+    push_option(core_info.type, core_info.name, CPPOption(
+		    "Specified additional module search path",
+		    "mp","module-path","",this,0,
+		    push_module_path).get());
+    push_option(core_info.type, core_info.name, CPPOption(
 		    "Specifies module search recursion depth",
-		    "mr","module-recursion","DEPTH",this,0,
-		    set_recursion_depth).get_opt());
-
-    module_downloader = -1;
-    module_parser     = -1;
-    module_handler    = -1;
+		    "mr","module-recursion","",this,0,
+		    set_recutsion_depth).get());
 }

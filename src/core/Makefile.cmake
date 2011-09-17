@@ -1,19 +1,19 @@
-add_library(dcppg-data STATIC 
+#add_library(dcppg-data STATIC 
 #  ${CORE_DIR}/data/varstring.cpp
-  ${CORE_DIR}/data/dlinked.cpp
+#  ${CORE_DIR}/data/dlinked.cpp
 #  ${CORE_DIR}/data/option.cpp
-  )
+#  )
 
 set(core-sources
   ${CORE_DIR}/main.cpp
-#  ${CORE_DIR}/core_config.c
   ${CORE_DIR}/grabber.cpp
   ${CORE_DIR}/configuration.cpp
-  ${CORE_DIR}/optparser.cpp
+  ${CORE_DIR}/optionparser.cpp
+#  ${CORE_DIR}/optparser.cpp
   )
 
 set(core-libs ${core-libs}
-  dcppg-data
+#  dcppg-data
   )
 
 if(HAVE_DLOPEN)
